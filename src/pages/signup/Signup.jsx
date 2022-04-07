@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Box, Button, TextField, Typography, Link } from "@mui/material";
+import { Box, Button, Input, TextField, Typography, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useToggle } from "hooks/useToggle";
-import * as S from "components/Button";
+import * as S from "components/button/Button";
 
 export function Signup() {
 	const [enterStatus, setEnterStatus] = useToggle();
@@ -71,8 +71,8 @@ export function Signup() {
 						sx={{ marginTop: "13px" }}
 						inputProps={{
 							sx: {
-								width: "444px",
-								height: "28px",
+								width: 444,
+								height: 28,
 								background: "#FFFFFF",
 								border: "1px solid #777777",
 								boxSizing: "border-box",
