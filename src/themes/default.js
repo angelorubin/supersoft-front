@@ -1,6 +1,12 @@
 import { createTheme } from "@mui/material";
 import { blue, green } from "@mui/material/colors";
 
+const fontSize = 14; // px
+// Tell Material-UI what's the font-size on the html element.
+// 16px is the default font-size used by browsers.
+const htmlFontSize = 16;
+const coef = fontSize / 14;
+
 export function theme() {
 	return createTheme({
 		palette: {
@@ -30,6 +36,9 @@ export function theme() {
 				A400: "#bdbdbd",
 				A700: "#616161",
 			},
+		},
+		typography: {
+			pxToRem: (size) => `${(size / htmlFontSize) * coef}rem`,
 		},
 	});
 }

@@ -1,10 +1,7 @@
-import { useToggle } from "hooks/useToggle";
 import { Box, Button, Input, Typography } from "@mui/material";
-import { Post } from "components/post/Post";
+import { Posts } from "components/posts/Posts";
 
 export function Main() {
-	const [isChanged, setIsChanged] = useToggle();
-
 	return (
 		<Box
 			sx={{
@@ -166,7 +163,7 @@ export function Main() {
 					{/**
 					 * Component Post
 					 */}
-					<Post />
+					<Posts />
 				</Box>
 			</Box>
 		</Box>
