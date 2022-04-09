@@ -4,7 +4,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { Icon } from "components/icon/Icon";
 import { BiEdit } from "react-icons/bi";
 
-export const Posts = ({ posts }) => {
+export const Post = ({ posts }) => {
 	return (
 		<Box
 			sx={{

@@ -1,5 +1,5 @@
 import { Box, Button, Input, Typography } from "@mui/material";
-import { Posts } from "components/posts/Posts";
+import { Post } from "components/post/Post";
 
 export function Main() {
 	return (
@@ -163,7 +163,7 @@ export function Main() {
 					{/**
 					 * Component Post
 					 */}
-					<Posts />
+					<Post />
 				</Box>
 			</Box>
 		</Box>
