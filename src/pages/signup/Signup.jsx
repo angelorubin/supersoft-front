@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { Box, Button, Input, TextField, Typography, Link } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { useToggle } from "hooks/useToggle";
 import * as S from "components/button/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { register } from "features/signup/slice";
 
 export function Signup() {
-	const [enterStatus, setEnterStatus] = useToggle();
+	const dispatch = useDispatch();
 	const [username, setUsername] = useState("");
 
 	const handleChange = (e) => {
 		setUsername(e.target.value);
+	};
+
+	const handleClick = () => {
+		dispatch(register(username));
 	};
 
 	return (
@@ -92,6 +97,7 @@ export function Signup() {
 				>
 					{username.length > 0 ? (
 						<S.Button
+							onClick={handleClick}
 							to="/main"
 							sx={{
 								display: "flex",
