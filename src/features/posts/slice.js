@@ -16,6 +16,7 @@ const postsSlice = createSlice({
       // immutable state based off those changes
       state.value += 1;
     },
+    createPost: (state) => {},
   },
 });
 

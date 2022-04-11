@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material";
-
 import { useSelector, useDispatch } from "react-redux";
 import { increment } from "./slice";
 
