@@ -156,7 +156,7 @@ export function Vaccine() {
 								sx={{
 									backgroundColor: "primary.main",
 									"&:hover": {
-										backgroundColor: "red",
+										backgroundColor: "primary",
 									},
 								}}
 							>
