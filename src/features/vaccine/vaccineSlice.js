@@ -1,31 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { http } from "config/api";
 
-const initialState = { status: null, vaccine: {} };
+const initialState = { status: null };
 
-export const getVaccine = createAsyncThunk(
-  "vaccine/getVaccine",
-  async (dispatch, getState) => {
-    return await http.get("/vaccine").then((res) => res.data);
-  }
+export const createVaccine = createAsyncThunk(
+	"vaccine/createVaccine",
+	async (vaccine) => {
+		return await http
+			.post("/vaccine", { data: vaccine })
+			.then((res) => res.data);
+	}
 );
 
 const vaccineSlice = createSlice({
-  name: "vaccine",
-  initialState,
-  reducers: {},
-  extraReducers: {
-    [getVaccine.pending]: (state, action) => {
-      state.status = "loading";
-    },
-    [getVaccine.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.vaccine = action.payload;
-    },
-    [getVaccine.rejected]: (state, action) => {
-      state.status = "failed";
-    },
-  },
+	name: "vaccine",
+	initialState,
+	extraReducers: {
+		[createVaccine.pending]: (state, action) => {
+			state.status = "loading";
+		},
+		[createVaccine.fulfilled]: (state, action) => {
+			state.status = "success";
+		},
+		[createVaccine.rejected]: (state, action) => {
+			state.status = "failed";
+		},
+	},
 });
 
 // export const {} = vaccineSlice.actions;
