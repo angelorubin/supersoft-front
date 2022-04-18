@@ -1,12 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import counterReducer from "../features/counter/counterSlice";
-import postReducer from "../features/post/slice";
-import signupReducer from "../features/signup/slice";
+import vaccineReducer from "../features/vaccine/vaccineSlice";
 
 export const store = configureStore({
-	reducer: {
-		// counter: counterReducer,
-		post: postReducer,
-		signup: signupReducer,
-	},
+  reducer: {
+    vaccine: vaccineReducer,
+  },
 });
