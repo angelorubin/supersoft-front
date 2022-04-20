@@ -7,16 +7,18 @@ import {
 	TextField,
 	Typography,
 	Link,
+	useTheme,
 } from "@mui/material";
 import { Icon } from "components/icon/Icon";
 import { BiExit } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
-import { createVaccine } from "features/vaccine/vaccineSlice";
+import { createVaccine } from "features/vaccine/slice";
+import { getVaccines } from "features/list-vaccines/slice";
+import { ListVaccines } from "features/list-vaccines";
 import { CircularProgress } from "@mui/material";
-import { Vaccines } from "features/vaccines/Vaccines";
 
 export function Vaccine() {
-	// const { username } = useSelector(selectSignup);
+	const { palette } = useTheme();
 	const dispatch = useDispatch();
 	const { status } = useSelector((state) => state.vaccine);
 	const [open, setOpen] = useState(false);
@@ -31,9 +33,9 @@ export function Vaccine() {
 	});
 
 	useEffect(() => {
-		// dispatch(getVaccine());
 		if (status === "success" || status === "failed") {
 			setOpen(true);
+			dispatch(getVaccines());
 		} else {
 			setOpen(false);
 		}
@@ -99,6 +101,7 @@ export function Vaccine() {
 					width: "100%",
 					borderBottom: `1px solid`,
 					borderBottomColor: "grey.300",
+					backgroundColor: "primary.light",
 				}}
 			>
 				<Box sx={{ display: "flex", width: "90%" }}>
@@ -130,10 +133,15 @@ export function Vaccine() {
 							alignItems: "center",
 						}}
 					>
-						<Link href="#">vacina</Link>
 						<Link href="#">
 							<Icon
-								value={{ size: "1.4em", style: { verticalAlign: "middle" } }}
+								value={{
+									style: {
+										verticalAlign: "middle",
+										size: "1.5rem",
+										color: palette.common.black,
+									},
+								}}
 							>
 								<BiExit />
 							</Icon>
@@ -154,9 +162,7 @@ export function Vaccine() {
 					sx={{
 						display: "flex",
 						flexDirection: "column",
-						justifyContent: "center",
-						minWidth: "90%",
-						alignItems: "center",
+						width: "90%",
 					}}
 				>
 					<Box
@@ -259,6 +265,7 @@ export function Vaccine() {
 							}}
 						>
 							<Button
+								size="small"
 								sx={{
 									backgroundColor: "primary.main",
 									color: "primary.contrastText",
@@ -268,9 +275,7 @@ export function Vaccine() {
 								}}
 								onClick={handleClick}
 							>
-								<Typography sx={{ fontWeight: "900", letterSpacing: "1px" }}>
-									Cadastrar
-								</Typography>
+								Cadastrar
 							</Button>
 						</Box>
 					</Box>
@@ -283,23 +288,8 @@ export function Vaccine() {
 							marginTop: "30px",
 						}}
 					>
-						<Box sx={{ display: "flex" }}>
-							<Typography
-								sx={{
-									fontFamily: "Roboto",
-									fontSize: "22px",
-									fontWeight: 700,
-									lineHeight: "26px",
-									letterSpacing: "0em",
-									textAlign: "left",
-								}}
-							>
-								Vacinas cadastradas
-							</Typography>
-						</Box>
-
 						<Box>
-							<Vaccines />
+							<ListVaccines />
 						</Box>
 					</Box>
 				</Box>

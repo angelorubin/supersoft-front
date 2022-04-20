@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { http } from "config/api";
 
-const initialState = { status: null };
+const initialState = { status: null, vaccines: [] };
 
 export const createVaccine = createAsyncThunk(
 	"vaccine/createVaccine",
@@ -9,6 +9,13 @@ export const createVaccine = createAsyncThunk(
 		return await http
 			.post("/vaccine", { data: vaccine })
 			.then((res) => res.data);
+	}
+);
+
+export const destroyVaccine = createAsyncThunk(
+	"vaccine/destroyVaccine",
+	async (id) => {
+		return await http.put(`/vaccine/${id}`).then((res) => res.data);
 	}
 );
 
@@ -25,9 +32,16 @@ const vaccineSlice = createSlice({
 		[createVaccine.rejected]: (state, action) => {
 			state.status = "failed";
 		},
+		[destroyVaccine.pending]: (state, action) => {
+			state.status = "loading";
+		},
+		[destroyVaccine.fulfilled]: (state, action) => {
+			state.status = "success";
+		},
+		[destroyVaccine.rejected]: (state, action) => {
+			state.status = "failed";
+		},
 	},
 });
-
-// export const {} = vaccineSlice.actions;
 
 export default vaccineSlice.reducer;
