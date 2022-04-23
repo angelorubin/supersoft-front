@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import vaccineReducer from "../features/vaccine/slice";
-import listVaccinesReducer from "features/list-vaccines/slice";
+import vaccinesReducer from "features/vaccines/slice";
 
 export const store = configureStore({
 	reducer: {
-		vaccine: vaccineReducer,
-		listVaccines: listVaccinesReducer,
+		vaccines: vaccinesReducer,
 	},
 });

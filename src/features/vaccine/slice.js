@@ -23,15 +23,6 @@ const vaccineSlice = createSlice({
 	name: "vaccine",
 	initialState,
 	extraReducers: {
-		[createVaccine.pending]: (state, action) => {
-			state.status = "loading";
-		},
-		[createVaccine.fulfilled]: (state, action) => {
-			state.status = "success";
-		},
-		[createVaccine.rejected]: (state, action) => {
-			state.status = "failed";
-		},
 		[destroyVaccine.pending]: (state, action) => {
 			state.status = "loading";
 		},
