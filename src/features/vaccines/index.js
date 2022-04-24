@@ -78,7 +78,6 @@ export function Vaccines() {
   };
 
   const handleClickDestroyVaccine = () => {
-    console.log(id);
     dispatch(destroyVaccine({ id }));
     dispatch(getVaccines());
     setDestroyDialog(false);

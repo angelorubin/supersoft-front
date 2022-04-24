@@ -20,7 +20,6 @@ export const getVaccines = createAsyncThunk(
 export const destroyVaccine = createAsyncThunk(
   "vaccines/destroy",
   async ({ id }) => {
-    console.log(id);
     await http.delete(`/vaccine/${id}`).then((res) => res.data);
   }
 );
@@ -79,9 +78,8 @@ const vaccinesSlice = createSlice({
     });
     builder.addCase(destroyVaccine.fulfilled, (state, action) => {
       state.status = "success";
-      state.data = [
-        ...state.data.filter((item) => item.id !== action.payload.id),
-      ];
+      const id = Number(action.payload.id);
+      state.data = [...state.data.filter((item) => item.id !== id)];
     });
 
     builder.addCase(createVaccine.pending, (state, action) => {
