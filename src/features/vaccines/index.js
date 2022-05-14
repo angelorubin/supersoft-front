@@ -35,7 +35,7 @@ export function Vaccines() {
 	const dispatch = useDispatch();
 	const [editDialog, setEditDialog] = useState(false);
 	const [destroyDialog, setDestroyDialog] = useState(false);
-	const [id, setId] = useState(null);
+	const [id, setId] = useState("");
 	const [vaccine, setVaccine] = useState([]);
 
 	useEffect(() => {
@@ -44,7 +44,7 @@ export function Vaccines() {
 
 	const handleOpenEditDialog = (e) => {
 		setEditDialog(true);
-		const id = +e.currentTarget.id;
+		const id = Number(e.currentTarget.id);
 		setId(id);
 		const filteredVaccine = vaccines.data.filter(
 			(vaccine) => vaccine.id === id
@@ -63,7 +63,7 @@ export function Vaccines() {
 		setVaccine([...editedVaccine]);
 	};
 
-	const handleDestroyDialog = async (e) => {
+	const handleOpenDestroyDialog = async (e) => {
 		const id = e.target.id;
 		setId(id);
 		setDestroyDialog(true);
@@ -78,23 +78,20 @@ export function Vaccines() {
 	};
 
 	const handleClickDestroyVaccine = () => {
-		console.log(id);
 		dispatch(destroyVaccine({ id }));
 		dispatch(getVaccines());
 		setDestroyDialog(false);
 	};
 
-	const handleClickSaveVaccine = () => {
-		dispatch(updateVaccine(id, vaccine));
+	const handleClickUpdateVaccine = () => {
+		console.log(vaccine[0]);
+		dispatch(updateVaccine({ id, vaccine: vaccine[0] }));
 		dispatch(getVaccines());
 		setEditDialog(false);
 	};
 
 	return (
 		<>
-			{JSON.stringify(vaccine, null, 2)}
-			{JSON.stringify(status, null, 2)}
-
 			{/* Destroy Dialog  */}
 			<Dialog open={destroyDialog} onClose={handleCloseDestroyDialog}>
 				<DialogTitle>Deletar Vacina</DialogTitle>
@@ -189,12 +186,18 @@ export function Vaccines() {
 					</Box>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCloseEditDialog}>Cancelar</Button>
+					<Button size="small" onClick={handleCloseEditDialog}>
+						Cancelar
+					</Button>
 					<Button
-						onClick={handleClickSaveVaccine}
+						size="small"
+						onClick={handleClickUpdateVaccine}
 						sx={{
 							backgroundColor: "primary.main",
 							color: "primary.contrastText",
+							"&:hover": {
+								backgroundColor: "primary.light",
+							},
 						}}
 					>
 						Salvar
@@ -299,7 +302,7 @@ export function Vaccines() {
 													>
 														<RiDeleteBin2Line
 															id={item.id}
-															onClick={handleDestroyDialog}
+															onClick={handleOpenDestroyDialog}
 														/>
 													</CustomIcon>
 												</Box>
