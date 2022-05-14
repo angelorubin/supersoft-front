@@ -12,9 +12,9 @@ import {
 import { Icon } from "components/icon/Icon";
 import { BiExit } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
-import { createVaccine } from "features/vaccines/slice";
-import { getVaccines } from "features/vaccines/slice";
-import { Vaccines } from "features/vaccines";
+import { createVaccine } from "features/vaccine/slice";
+import { getVaccines } from "features/vaccine/slice";
+import { Vaccines } from "features/vaccine";
 import { CircularProgress } from "@mui/material";
 
 export function Vaccine() {
@@ -72,6 +72,7 @@ export function Vaccine() {
 				height: "100vh",
 			}}
 		>
+			{JSON.stringify(status, null, 2)}
 			<Box
 				sx={{
 					display: "flex",
