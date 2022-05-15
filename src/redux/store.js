@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import vaccinesReducer from "features/vaccines/slice";
+import listVaccinesReducer from "features/vaccines/ListVaccinesSlice";
+import createVaccineReducer from "features/vaccines/CreateVaccineSlice";
 
 export const store = configureStore({
-	reducer: {
-		vaccines: vaccinesReducer,
-	},
+  reducer: {
+    listVaccines: listVaccinesReducer,
+    createVaccine: createVaccineReducer,
+  },
+  devTools: process.env.NODE_ENV !== "production",
 });

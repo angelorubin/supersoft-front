@@ -15,7 +15,8 @@ import {
   Button,
   Divider,
   TextField,
-  Snackbar,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -24,31 +25,38 @@ import {
   editVaccine,
   destroyVaccine,
   updateVaccine,
-} from "features/vaccines/slice";
+} from "features/vaccines/ListVaccinesSlice";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Icon as CustomIcon } from "components/icon/Icon";
 
-export function Vaccines() {
+export function ListVaccines() {
   const theme = useTheme();
-  const { status, vaccines } = useSelector((state) => state);
+  const { status, data } = useSelector((state) => state.listVaccines);
   const dispatch = useDispatch();
   const [editDialog, setEditDialog] = useState(false);
   const [destroyDialog, setDestroyDialog] = useState(false);
   const [id, setId] = useState("");
   const [vaccine, setVaccine] = useState([]);
+  const [backdrop, setBackdrop] = useState(false);
 
   useEffect(() => {
     dispatch(getVaccines());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (status === "loading") {
+      setBackdrop(true);
+    } else {
+      setBackdrop(false);
+    }
+  }, [status]);
+
   const handleOpenEditDialog = (e) => {
     setEditDialog(true);
     const id = Number(e.currentTarget.id);
     setId(id);
-    const filteredVaccine = vaccines.data.filter(
-      (vaccine) => vaccine.id === id
-    );
+    const filteredVaccine = data.filter((vaccine) => vaccine.id === id);
     setVaccine(filteredVaccine);
   };
 
@@ -79,8 +87,8 @@ export function Vaccines() {
 
   const handleClickDestroyVaccine = () => {
     dispatch(destroyVaccine({ id }));
-    dispatch(getVaccines());
     setDestroyDialog(false);
+    dispatch(getVaccines());
   };
 
   const handleClickUpdateVaccine = () => {
@@ -90,13 +98,27 @@ export function Vaccines() {
     setEditDialog(false);
   };
 
+  const handleCloseBackdrop = () => {};
+
   return (
     <>
+      {/* Backdrop */}
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdrop}
+        onClick={handleCloseBackdrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       {/* Destroy Dialog  */}
       <Dialog open={destroyDialog} onClose={handleCloseDestroyDialog}>
+        {JSON.stringify(id, null, 2)}
         <DialogTitle>Deletar Vacina</DialogTitle>
         <Divider />
-        <DialogContent>Deseja realmente deletar a vacina?</DialogContent>
+        <DialogContent>
+          Deseja realmente deletar a vacina da base de dados?
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDestroyDialog}>Cancelar</Button>
           <Button
@@ -205,7 +227,7 @@ export function Vaccines() {
         </DialogActions>
       </Dialog>
 
-      {vaccines.data.length > 0 ? (
+      {data.length > 0 ? (
         <Box
           sx={{
             display: "flex",
@@ -258,8 +280,8 @@ export function Vaccines() {
                     <Typography sx={{ fontWeight: 900 }}>Ações</Typography>
                   </TableCell>
                 </TableRow>
-                {vaccines &&
-                  vaccines.data.map((item) => (
+                {data &&
+                  data.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell>{item.nome_vacina}</TableCell>
                       <TableCell>{item.nome_fabricante}</TableCell>
