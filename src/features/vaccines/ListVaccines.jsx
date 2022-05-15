@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+<<<<<<< HEAD:src/features/vaccines/ListVaccines.jsx
   Box,
   Table,
   TableContainer,
@@ -26,6 +27,33 @@ import {
   destroyVaccine,
   updateVaccine,
 } from "features/vaccines/ListVaccinesSlice";
+=======
+	Box,
+	Table,
+	TableContainer,
+	TableHead,
+	TableRow,
+	TableCell,
+	Typography,
+	useTheme,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogActions,
+	Button,
+	Divider,
+	TextField,
+	Snackbar,
+} from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import {
+	getVaccines,
+	getVaccineById,
+	editVaccine,
+	destroyVaccine,
+	updateVaccine,
+} from "features/vaccines/slice";
+>>>>>>> 24bf8357a1d74d382a0b135104e3d725b96144d8:src/features/vaccines/index.js
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Icon as CustomIcon } from "components/icon/Icon";
@@ -40,9 +68,9 @@ export function ListVaccines() {
   const [vaccine, setVaccine] = useState([]);
   const [backdrop, setBackdrop] = useState(false);
 
-  useEffect(() => {
-    dispatch(getVaccines());
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch(getVaccines());
+	}, [dispatch]);
 
   useEffect(() => {
     if (status === "loading") {
@@ -60,30 +88,30 @@ export function ListVaccines() {
     setVaccine(filteredVaccine);
   };
 
-  const handleChangeEditVaccine = (e) => {
-    const { id, name, value } = e.target;
+	const handleChangeEditVaccine = (e) => {
+		const { id, name, value } = e.target;
 
-    const editedVaccine = vaccine.map((obj, i) => ({
-      ...obj,
-      [name]: value,
-    }));
+		const editedVaccine = vaccine.map((obj, i) => ({
+			...obj,
+			[name]: value,
+		}));
 
-    setVaccine([...editedVaccine]);
-  };
+		setVaccine([...editedVaccine]);
+	};
 
-  const handleOpenDestroyDialog = async (e) => {
-    const id = e.target.id;
-    setId(id);
-    setDestroyDialog(true);
-  };
+	const handleOpenDestroyDialog = async (e) => {
+		const id = e.target.id;
+		setId(id);
+		setDestroyDialog(true);
+	};
 
-  const handleCloseDestroyDialog = () => {
-    setDestroyDialog(false);
-  };
+	const handleCloseDestroyDialog = () => {
+		setDestroyDialog(false);
+	};
 
-  const handleCloseEditDialog = () => {
-    setEditDialog(false);
-  };
+	const handleCloseEditDialog = () => {
+		setEditDialog(false);
+	};
 
   const handleClickDestroyVaccine = () => {
     dispatch(destroyVaccine({ id }));
@@ -91,12 +119,12 @@ export function ListVaccines() {
     dispatch(getVaccines());
   };
 
-  const handleClickUpdateVaccine = () => {
-    console.log(vaccine[0]);
-    dispatch(updateVaccine({ id, vaccine: vaccine[0] }));
-    dispatch(getVaccines());
-    setEditDialog(false);
-  };
+	const handleClickUpdateVaccine = () => {
+		console.log(vaccine[0]);
+		dispatch(updateVaccine({ id, vaccine: vaccine[0] }));
+		dispatch(getVaccines());
+		setEditDialog(false);
+	};
 
   const handleCloseBackdrop = () => {};
 
@@ -133,99 +161,99 @@ export function ListVaccines() {
         </DialogActions>
       </Dialog>
 
-      {/* Edit Dialog  */}
-      <Dialog open={editDialog} onClose={handleCloseEditDialog}>
-        <DialogTitle>Editar Vacina</DialogTitle>
-        <Divider />
-        <DialogContent>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
-            {vaccine &&
-              vaccine.map((item) => {
-                return (
-                  <>
-                    <TextField
-                      id={item.id}
-                      name="nome_vacina"
-                      size="small"
-                      label="nome da vacina"
-                      placeholder="nome da vacina"
-                      onChange={handleChangeEditVaccine}
-                      value={item.nome_vacina}
-                    />
+			{/* Edit Dialog  */}
+			<Dialog open={editDialog} onClose={handleCloseEditDialog}>
+				<DialogTitle>Editar Vacina</DialogTitle>
+				<Divider />
+				<DialogContent>
+					<Box sx={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+						{vaccine &&
+							vaccine.map((item) => {
+								return (
+									<>
+										<TextField
+											id={item.id}
+											name="nome_vacina"
+											size="small"
+											label="nome da vacina"
+											placeholder="nome da vacina"
+											onChange={handleChangeEditVaccine}
+											value={item.nome_vacina}
+										/>
 
-                    <TextField
-                      id={item.id}
-                      name="nome_fabricante"
-                      size="small"
-                      label="nome do fabricante"
-                      placeholder="nome do fabricante"
-                      onChange={handleChangeEditVaccine}
-                      value={item.nome_fabricante}
-                    />
+										<TextField
+											id={item.id}
+											name="nome_fabricante"
+											size="small"
+											label="nome do fabricante"
+											placeholder="nome do fabricante"
+											onChange={handleChangeEditVaccine}
+											value={item.nome_fabricante}
+										/>
 
-                    <TextField
-                      id={item.id}
-                      name="pais_origem"
-                      size="small"
-                      placeholder="país de origem"
-                      label="país de origem"
-                      onChange={handleChangeEditVaccine}
-                      value={item.pais_origem}
-                    />
+										<TextField
+											id={item.id}
+											name="pais_origem"
+											size="small"
+											placeholder="país de origem"
+											label="país de origem"
+											onChange={handleChangeEditVaccine}
+											value={item.pais_origem}
+										/>
 
-                    <TextField
-                      id={item.id}
-                      name="quantidade_minimas_doses"
-                      size="small"
-                      placeholder="quantidade mínimas de doses"
-                      label="quantidade mínimas de doses"
-                      onChange={handleChangeEditVaccine}
-                      value={item.quantidade_minimas_doses}
-                    />
+										<TextField
+											id={item.id}
+											name="quantidade_minimas_doses"
+											size="small"
+											placeholder="quantidade mínimas de doses"
+											label="quantidade mínimas de doses"
+											onChange={handleChangeEditVaccine}
+											value={item.quantidade_minimas_doses}
+										/>
 
-                    <TextField
-                      id={item.id}
-                      name="percentual_eficacia_comprovada"
-                      size="small"
-                      label="percentual eficácia comprovada"
-                      placeholder="percentual eficácia comprovada"
-                      onChange={handleChangeEditVaccine}
-                      value={item.percentual_eficacia_comprovada}
-                    />
+										<TextField
+											id={item.id}
+											name="percentual_eficacia_comprovada"
+											size="small"
+											label="percentual eficácia comprovada"
+											placeholder="percentual eficácia comprovada"
+											onChange={handleChangeEditVaccine}
+											value={item.percentual_eficacia_comprovada}
+										/>
 
-                    <TextField
-                      id={item.id}
-                      name="preco_venda_por_dose"
-                      size="small"
-                      label="preço venda por dose"
-                      placeholder="preço venda por dose"
-                      onChange={handleChangeEditVaccine}
-                      value={item.preco_venda_por_dose}
-                    />
-                  </>
-                );
-              })}
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button size="small" onClick={handleCloseEditDialog}>
-            Cancelar
-          </Button>
-          <Button
-            size="small"
-            onClick={handleClickUpdateVaccine}
-            sx={{
-              backgroundColor: "primary.main",
-              color: "primary.contrastText",
-              "&:hover": {
-                backgroundColor: "primary.light",
-              },
-            }}
-          >
-            Salvar
-          </Button>
-        </DialogActions>
-      </Dialog>
+										<TextField
+											id={item.id}
+											name="preco_venda_por_dose"
+											size="small"
+											label="preço venda por dose"
+											placeholder="preço venda por dose"
+											onChange={handleChangeEditVaccine}
+											value={item.preco_venda_por_dose}
+										/>
+									</>
+								);
+							})}
+					</Box>
+				</DialogContent>
+				<DialogActions>
+					<Button size="small" onClick={handleCloseEditDialog}>
+						Cancelar
+					</Button>
+					<Button
+						size="small"
+						onClick={handleClickUpdateVaccine}
+						sx={{
+							backgroundColor: "primary.main",
+							color: "primary.contrastText",
+							"&:hover": {
+								backgroundColor: "primary.light",
+							},
+						}}
+					>
+						Salvar
+					</Button>
+				</DialogActions>
+			</Dialog>
 
       {data.length > 0 ? (
         <Box
@@ -314,30 +342,30 @@ export function ListVaccines() {
                             />
                           </CustomIcon>
 
-                          <CustomIcon
-                            value={{
-                              style: {
-                                color: theme.palette.error.main,
-                                size: "1.5rem",
-                              },
-                            }}
-                          >
-                            <RiDeleteBin2Line
-                              id={item.id}
-                              onClick={handleOpenDestroyDialog}
-                            />
-                          </CustomIcon>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableHead>
-            </Table>
-          </TableContainer>
-        </Box>
-      ) : (
-        <Typography>Nenhuma vacina cadastrada.</Typography>
-      )}
-    </>
-  );
+													<CustomIcon
+														value={{
+															style: {
+																color: theme.palette.error.main,
+																size: "1.5rem",
+															},
+														}}
+													>
+														<RiDeleteBin2Line
+															id={item.id}
+															onClick={handleOpenDestroyDialog}
+														/>
+													</CustomIcon>
+												</Box>
+											</TableCell>
+										</TableRow>
+									))}
+							</TableHead>
+						</Table>
+					</TableContainer>
+				</Box>
+			) : (
+				<Typography>Nenhuma vacina cadastrada.</Typography>
+			)}
+		</>
+	);
 }
