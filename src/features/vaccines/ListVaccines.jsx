@@ -43,10 +43,6 @@ export function ListVaccines() {
 		}
 	}, [isLoading]);
 
-	useEffect(() => {
-		console.log(data);
-	}, []);
-
 	const handleOpenEditDialog = (e) => {
 		setEditDialog(true);
 		const id = Number(e.currentTarget.id);
