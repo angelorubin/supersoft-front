@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Box, Typography, Link, Backdrop } from "@mui/material";
 import { Icon } from "components/icon/Icon";
 import { BiExit } from "react-icons/bi";
@@ -15,14 +15,6 @@ export function Vaccines() {
 
 	return (
 		<>
-			<Backdrop
-				sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-				open={open}
-				onClick={handleClose}
-			>
-				<CircularProgress color="inherit" />
-			</Backdrop>
-
 			<Box
 				sx={{
 					display: "flex",
@@ -112,12 +104,12 @@ export function Vaccines() {
 								marginTop: "30px",
 							}}
 						>
-							<Box>
+							<Suspense fallback={<CircularProgress sx={{ color: "red" }} />}>
 								<CreateVaccine />
-							</Box>
-							<Box>
+							</Suspense>
+							<Suspense fallback={<CircularProgress sx={{ color: "red" }} />}>
 								<ListVaccines />
-							</Box>
+							</Suspense>
 						</Box>
 					</Box>
 				</Box>
