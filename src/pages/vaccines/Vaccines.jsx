@@ -104,10 +104,10 @@ export function Vaccines() {
 								marginTop: "30px",
 							}}
 						>
-							<Suspense fallback={<CircularProgress sx={{ color: "red" }} />}>
+							<Suspense fallback={<CircularProgress />}>
 								<CreateVaccine />
 							</Suspense>
-							<Suspense fallback={<CircularProgress sx={{ color: "red" }} />}>
+							<Suspense fallback={<CircularProgress />}>
 								<ListVaccines />
 							</Suspense>
 						</Box>
