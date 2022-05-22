@@ -29,10 +29,12 @@ import {
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Icon as CustomIcon } from "components/icon/Icon";
+import { useGetVaccinesQuery } from "services/listVaccines";
 
 export function ListVaccines() {
+  const { data, error, isLoading } = useGetVaccinesQuery();
   const theme = useTheme();
-  const { status, data } = useSelector((state) => state.listVaccines);
+  // const { status, data } = useSelector((state) => state.listVaccines);
   const dispatch = useDispatch();
   const [editDialog, setEditDialog] = useState(false);
   const [destroyDialog, setDestroyDialog] = useState(false);
@@ -41,16 +43,12 @@ export function ListVaccines() {
   const [backdrop, setBackdrop] = useState(false);
 
   useEffect(() => {
-    dispatch(getVaccines());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (status === "loading") {
+    if (isLoading) {
       setBackdrop(true);
     } else {
       setBackdrop(false);
     }
-  }, [status]);
+  }, [isLoading]);
 
   const handleOpenEditDialog = (e) => {
     setEditDialog(true);
@@ -86,16 +84,15 @@ export function ListVaccines() {
   };
 
   const handleClickDestroyVaccine = () => {
-    dispatch(destroyVaccine({ id }));
-    setDestroyDialog(false);
-    dispatch(getVaccines());
+    // dispatch(destroyVaccine({ id }));
+    // setDestroyDialog(false);
+    // dispatch(getVaccines());
   };
 
   const handleClickUpdateVaccine = () => {
-    console.log(vaccine[0]);
-    dispatch(updateVaccine({ id, vaccine: vaccine[0] }));
-    dispatch(getVaccines());
-    setEditDialog(false);
+    // dispatch(updateVaccine({ id, vaccine: vaccine[0] }));
+    // dispatch(getVaccines());
+    // setEditDialog(false);
   };
 
   const handleCloseBackdrop = () => {};
@@ -227,7 +224,11 @@ export function ListVaccines() {
         </DialogActions>
       </Dialog>
 
-      {data.length > 0 ? (
+      {error ? (
+        <Typography>Nenhuma vacina cadastrada.</Typography>
+      ) : isLoading ? (
+        <>Loading...</>
+      ) : data ? (
         <Box
           sx={{
             display: "flex",
@@ -280,8 +281,8 @@ export function ListVaccines() {
                     <Typography sx={{ fontWeight: 900 }}>Ações</Typography>
                   </TableCell>
                 </TableRow>
-                {data &&
-                  data.map((item) => (
+                {data.vaccines &&
+                  data.vaccines.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell>{item.nome_vacina}</TableCell>
                       <TableCell>{item.nome_fabricante}</TableCell>
@@ -335,9 +336,7 @@ export function ListVaccines() {
             </Table>
           </TableContainer>
         </Box>
-      ) : (
-        <Typography>Nenhuma vacina cadastrada.</Typography>
-      )}
+      ) : null}
     </>
   );
 }
