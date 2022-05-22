@@ -25,16 +25,14 @@ import {
   editVaccine,
   destroyVaccine,
   updateVaccine,
-} from "features/vaccine/ListVaccinesSlice";
+} from "features/vaccine/listVaccinesSlice";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Icon as CustomIcon } from "components/icon/Icon";
-import { useGetVaccinesQuery } from "services/listVaccines";
 
 export function ListVaccines() {
-  const { data, error, isLoading } = useGetVaccinesQuery();
   const theme = useTheme();
-  // const { status, data } = useSelector((state) => state.listVaccines);
+  const { status, data } = useSelector((state) => state.listVaccines);
   const dispatch = useDispatch();
   const [editDialog, setEditDialog] = useState(false);
   const [destroyDialog, setDestroyDialog] = useState(false);
@@ -43,12 +41,12 @@ export function ListVaccines() {
   const [backdrop, setBackdrop] = useState(false);
 
   useEffect(() => {
-    if (isLoading) {
+    if (status) {
       setBackdrop(true);
     } else {
       setBackdrop(false);
     }
-  }, [isLoading]);
+  }, [status]);
 
   const handleOpenEditDialog = (e) => {
     setEditDialog(true);
@@ -224,9 +222,9 @@ export function ListVaccines() {
         </DialogActions>
       </Dialog>
 
-      {error ? (
+      {status ? (
         <Typography>Nenhuma vacina cadastrada.</Typography>
-      ) : isLoading ? (
+      ) : status ? (
         <>Loading...</>
       ) : data ? (
         <Box
