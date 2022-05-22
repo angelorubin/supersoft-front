@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Divider, Typography, TextField, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createVaccine, getVaccines } from "features/vaccine/VaccineSlice";
 
@@ -7,6 +7,10 @@ export function Vaccine() {
   const dispatch = useDispatch();
   const { status, data } = useSelector((state) => state.vaccine);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(getVaccines());
+  }, []);
 
   const [vaccine, setVaccine] = useState({
     nomeVacina: "",
@@ -68,6 +72,10 @@ export function Vaccine() {
         marginTop: "30px",
       }}
     >
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+
+      <Divider sx={{ margin: "1rem 0" }} />
+
       <Box sx={{ display: "flex" }}>
         <Typography
           sx={{
