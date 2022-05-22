@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createVaccine } from "features/vaccines/CreateVaccineSlice";
-import { getVaccines } from "features/vaccines/CreateVaccineSlice";
+import { createVaccine } from "features/vaccine/CreateVaccineSlice";
+import { getVaccines } from "features/vaccine/CreateVaccineSlice";
 
 export function CreateVaccine() {
   const dispatch = useDispatch();

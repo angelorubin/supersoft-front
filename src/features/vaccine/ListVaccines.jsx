@@ -25,7 +25,7 @@ import {
   editVaccine,
   destroyVaccine,
   updateVaccine,
-} from "features/vaccines/ListVaccinesSlice";
+} from "features/vaccine/ListVaccinesSlice";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Icon as CustomIcon } from "components/icon/Icon";

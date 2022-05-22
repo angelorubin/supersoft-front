@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "@emotion/react";
-import { Vaccines } from "./pages/vaccines/Vaccines";
+import { Vaccine } from "./pages/vaccine/Vaccine";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { theme } from "themes/default";
 import { CssBaseline } from "@mui/material";
@@ -11,7 +11,7 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Vaccines />} />
+          <Route path="/" element={<Vaccine />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
