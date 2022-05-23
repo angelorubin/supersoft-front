@@ -3,6 +3,11 @@ import { http } from "config/api";
 
 const initialState = { status: null, data: [] };
 
+export const getVaccines = createAsyncThunk(
+  "vaccines/get",
+  async () => await http("/vaccine").then((res) => res.data.vaccines)
+);
+
 export const createVaccine = createAsyncThunk(
   "vaccines/create",
   async (vaccine) => {
@@ -12,22 +17,17 @@ export const createVaccine = createAsyncThunk(
   }
 );
 
-export const getVaccines = createAsyncThunk(
-  "vaccines/get",
-  async () => await http("/vaccine").then((res) => res.data.vaccines)
+export const updateVaccine = createAsyncThunk(
+  "vaccines/update",
+  async ({ id, vaccine }) => {
+    await http.patch(`/vaccine/${Number(id)}`, vaccine).then((res) => res.data);
+  }
 );
 
 export const destroyVaccine = createAsyncThunk(
   "vaccines/destroy",
   async ({ id }) => {
     await http.delete(`/vaccine/${id}`).then((res) => res.data);
-  }
-);
-
-export const updateVaccine = createAsyncThunk(
-  "vaccines/update",
-  async ({ id, vaccine }) => {
-    await http.patch(`/vaccine/${Number(id)}`, vaccine).then((res) => res.data);
   }
 );
 
@@ -59,15 +59,21 @@ const vaccineSlice = createSlice({
 			state.data[0][action.payload.name] = action.payload.value;
 			*/
     },
-
     getVaccineById: (state, action) => {
       const vaccine = state.data.filter(
         (vaccine) => Number(vaccine.id) === Number(action.payload.id)
       );
       state.data = [...vaccine];
     },
+    orderVaccines: {
+      reducer: () => {},
+      prepare: () => {},
+    },
   },
   extraReducers: (builder) => {
+    builder.addCase(getVaccines.pending, (state, action) => {
+      state.status = "loading";
+    });
     builder.addCase(getVaccines.fulfilled, (state, action) => {
       state.status = "success";
       state.data = action.payload;
@@ -108,5 +114,6 @@ const vaccineSlice = createSlice({
   },
 });
 
-export const { editVaccine, getVaccineById } = vaccineSlice.actions;
+export const { editVaccine, getVaccineById, orderVaccines } =
+  vaccineSlice.actions;
 export default vaccineSlice.reducer;

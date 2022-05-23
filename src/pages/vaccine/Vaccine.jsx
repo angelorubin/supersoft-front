@@ -22,23 +22,7 @@ export function Vaccine() {
         <CircularProgress color="inherit" />
       </Backdrop>
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "90%",
-          }}
-        >
-          <VaccineFeature />
-        </Box>
-      </Box>
+      <VaccineFeature />
     </>
   );
 }

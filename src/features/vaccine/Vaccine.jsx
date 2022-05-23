@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-import { Box, Divider, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createVaccine, getVaccines } from "features/vaccine/VaccineSlice";
+import {
+  createVaccine,
+  getVaccines,
+  orderVaccines,
+} from "features/vaccine/VaccineSlice";
 
 export function Vaccine() {
   const dispatch = useDispatch();
@@ -10,7 +14,7 @@ export function Vaccine() {
 
   useEffect(() => {
     dispatch(getVaccines());
-  }, []);
+  }, [dispatch]);
 
   const [vaccine, setVaccine] = useState({
     nomeVacina: "",
@@ -20,15 +24,6 @@ export function Vaccine() {
     percentualEficaciaComprovada: "",
     precoVendaPorDose: "",
   });
-
-  useEffect(() => {
-    if (status === "success" || status === "failed") {
-      setOpen(false);
-      dispatch(getVaccines());
-    } else {
-      setOpen(true);
-    }
-  }, [dispatch, status]);
 
   const handleChange = (event) => {
     const id = event.currentTarget.id;
@@ -67,122 +62,133 @@ export function Vaccine() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        background: "#FFFFFF",
         width: "100%",
-        marginTop: "30px",
+        alignItems: "center",
       }}
     >
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-
-      <Divider sx={{ margin: "1rem 0" }} />
-
-      <Box sx={{ display: "flex" }}>
-        <Typography
-          sx={{
-            fontFamily: "Roboto",
-            fontSize: "22px",
-            fontWeight: 700,
-            lineHeight: "26px",
-            letterSpacing: "0em",
-            textAlign: "left",
-          }}
-        >
-          Cadastrar Vacina
-        </Typography>
-      </Box>
-
       <Box
         sx={{
-          display: "flex",
-          marginTop: "30px",
-          gap: "1rem",
-          flexDirection: "column",
-        }}
-      >
-        <Box sx={{ display: "flex", gap: "1rem", flexDirection: "column" }}>
-          <TextField
-            fullWidth
-            size="small"
-            id="nomeVacina"
-            label="Nome da vacina"
-            type="text"
-            value={vaccine.nomeVacina}
-            onChange={handleChange}
-          />
-
-          <TextField
-            fullWidth
-            size="small"
-            id="nomeFabricante"
-            label="Nome do fabricante"
-            type="text"
-            value={vaccine.nomeFabricante}
-            onChange={handleChange}
-          />
-
-          <TextField
-            fullWidth
-            size="small"
-            id="paisOrigem"
-            label="País de origem"
-            type="text"
-            value={vaccine.paisOrigem}
-            onChange={handleChange}
-          />
-
-          <TextField
-            fullWidth
-            size="small"
-            id="quantidadeMinimasDoses"
-            label="Quantidade minimas de doses"
-            type="text"
-            value={vaccine.quantidadeMinimasDoses}
-            onChange={handleChange}
-          />
-
-          <TextField
-            fullWidth
-            size="small"
-            id="percentualEficaciaComprovada"
-            label="Percentual de eficácia comprovada"
-            type="text"
-            value={vaccine.percentualEficaciaComprovada}
-            onChange={handleChange}
-          />
-
-          <TextField
-            fullWidth
-            size="small"
-            id="precoVendaPorDose"
-            label="Preço de venda por dose"
-            type="text"
-            value={vaccine.precoVendaPorDose}
-            onChange={handleChange}
-          />
-        </Box>
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
+          bgcolor: (theme) => theme.palette.common.black,
+          height: "10vh",
           width: "100%",
-          marginTop: "35px",
         }}
       >
-        <Button
-          size="small"
+        menu
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          background: "#FFFFFF",
+          width: "85%",
+          marginTop: "30px",
+        }}
+      >
+        <Box sx={{ display: "flex" }}>
+          <Typography
+            sx={{
+              fontFamily: "Roboto",
+              fontSize: "22px",
+              fontWeight: 700,
+              lineHeight: "26px",
+              letterSpacing: "0em",
+              textAlign: "left",
+            }}
+          >
+            Cadastrar Vacina
+          </Typography>
+        </Box>
+
+        <Box
           sx={{
-            backgroundColor: "primary.main",
-            color: "primary.contrastText",
-            "&:hover": {
-              backgroundColor: "primary.light",
-            },
+            display: "flex",
+            marginTop: "30px",
+            gap: "1rem",
+            flexDirection: "column",
           }}
-          onClick={handleClick}
         >
-          Cadastrar
-        </Button>
+          <Box sx={{ display: "flex", gap: "1rem", flexDirection: "column" }}>
+            <TextField
+              fullWidth
+              size="small"
+              id="nomeVacina"
+              label="Nome da vacina"
+              type="text"
+              value={vaccine.nomeVacina}
+              onChange={handleChange}
+            />
+
+            <TextField
+              fullWidth
+              size="small"
+              id="nomeFabricante"
+              label="Nome do fabricante"
+              type="text"
+              value={vaccine.nomeFabricante}
+              onChange={handleChange}
+            />
+
+            <TextField
+              fullWidth
+              size="small"
+              id="paisOrigem"
+              label="País de origem"
+              type="text"
+              value={vaccine.paisOrigem}
+              onChange={handleChange}
+            />
+
+            <TextField
+              fullWidth
+              size="small"
+              id="quantidadeMinimasDoses"
+              label="Quantidade minimas de doses"
+              type="text"
+              value={vaccine.quantidadeMinimasDoses}
+              onChange={handleChange}
+            />
+
+            <TextField
+              fullWidth
+              size="small"
+              id="percentualEficaciaComprovada"
+              label="Percentual de eficácia comprovada"
+              type="text"
+              value={vaccine.percentualEficaciaComprovada}
+              onChange={handleChange}
+            />
+
+            <TextField
+              fullWidth
+              size="small"
+              id="precoVendaPorDose"
+              label="Preço de venda por dose"
+              type="text"
+              value={vaccine.precoVendaPorDose}
+              onChange={handleChange}
+            />
+
+            <Button
+              size="small"
+              sx={{
+                backgroundColor: "primary.main",
+                color: "primary.contrastText",
+                "&:hover": {
+                  backgroundColor: "primary.light",
+                },
+              }}
+              onClick={handleClick}
+            >
+              Cadastrar
+            </Button>
+          </Box>
+
+          <Box>
+            <Typography variant="h6">Vacinas Cadastradas</Typography>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
