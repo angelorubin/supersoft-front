@@ -96,7 +96,7 @@ export function Vaccine() {
               textAlign: "left",
             }}
           >
-            Cadastrar Vacina
+            Registrar Vacina
           </Typography>
         </Box>
 
@@ -113,7 +113,7 @@ export function Vaccine() {
               fullWidth
               size="small"
               id="nomeVacina"
-              label="Nome da vacina"
+              label="nome vacina"
               type="text"
               value={vaccine.nomeVacina}
               onChange={handleChange}
@@ -123,7 +123,7 @@ export function Vaccine() {
               fullWidth
               size="small"
               id="nomeFabricante"
-              label="Nome do fabricante"
+              label="fabricante"
               type="text"
               value={vaccine.nomeFabricante}
               onChange={handleChange}
@@ -133,7 +133,7 @@ export function Vaccine() {
               fullWidth
               size="small"
               id="paisOrigem"
-              label="País de origem"
+              label="país origem"
               type="text"
               value={vaccine.paisOrigem}
               onChange={handleChange}
@@ -143,7 +143,7 @@ export function Vaccine() {
               fullWidth
               size="small"
               id="quantidadeMinimasDoses"
-              label="Quantidade minimas de doses"
+              label="quantidades mínimas de doses"
               type="text"
               value={vaccine.quantidadeMinimasDoses}
               onChange={handleChange}
@@ -153,7 +153,7 @@ export function Vaccine() {
               fullWidth
               size="small"
               id="percentualEficaciaComprovada"
-              label="Percentual de eficácia comprovada"
+              label="percentual eficácia comprovada"
               type="text"
               value={vaccine.percentualEficaciaComprovada}
               onChange={handleChange}
@@ -163,7 +163,7 @@ export function Vaccine() {
               fullWidth
               size="small"
               id="precoVendaPorDose"
-              label="Preço de venda por dose"
+              label="preço venda dose"
               type="text"
               value={vaccine.precoVendaPorDose}
               onChange={handleChange}
@@ -180,12 +180,23 @@ export function Vaccine() {
               }}
               onClick={handleClick}
             >
-              Cadastrar
+              Registrar
             </Button>
           </Box>
 
           <Box>
-            <Typography variant="h6">Vacinas Cadastradas</Typography>
+            <Typography
+              sx={{
+                fontFamily: "Roboto",
+                fontSize: "22px",
+                fontWeight: 700,
+                lineHeight: "26px",
+                letterSpacing: "0em",
+                textAlign: "left",
+              }}
+            >
+              Vacinas registradas
+            </Typography>
             <pre>{JSON.stringify(data, null, 2)}</pre>
           </Box>
         </Box>

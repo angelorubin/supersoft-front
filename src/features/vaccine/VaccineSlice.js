@@ -4,12 +4,12 @@ import { http } from "config/api";
 const initialState = { status: null, data: [] };
 
 export const getVaccines = createAsyncThunk(
-  "vaccines/get",
+  "vaccine/get",
   async () => await http("/vaccine").then((res) => res.data.vaccines)
 );
 
 export const createVaccine = createAsyncThunk(
-  "vaccines/create",
+  "vaccine/create",
   async (vaccine) => {
     return await http
       .post("/vaccine", { data: vaccine })
@@ -18,14 +18,14 @@ export const createVaccine = createAsyncThunk(
 );
 
 export const updateVaccine = createAsyncThunk(
-  "vaccines/update",
+  "vaccine/update",
   async ({ id, vaccine }) => {
     await http.patch(`/vaccine/${Number(id)}`, vaccine).then((res) => res.data);
   }
 );
 
 export const destroyVaccine = createAsyncThunk(
-  "vaccines/destroy",
+  "vaccine/destroy",
   async ({ id }) => {
     await http.delete(`/vaccine/${id}`).then((res) => res.data);
   }
