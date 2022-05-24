@@ -6,23 +6,11 @@ import { Vaccine as VaccineFeature } from "features/vaccine/Vaccine";
 import { CircularProgress } from "@mui/material";
 
 export function Vaccine() {
-  const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false);
 
-  const handleClose = (event, reason) => {
-    setOpen(false);
-  };
+	const handleClose = (event, reason) => {
+		setOpen(false);
+	};
 
-  return (
-    <>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-
-      <VaccineFeature />
-    </>
-  );
+	return <VaccineFeature />;
 }
