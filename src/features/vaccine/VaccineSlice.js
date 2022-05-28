@@ -1,4 +1,10 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import {
+	createAsyncThunk,
+	createSlice,
+	current,
+	original,
+	isDraft,
+} from "@reduxjs/toolkit";
 import { http } from "config/api";
 
 const initialState = { status: null, data: [] };
@@ -65,10 +71,6 @@ const vaccineSlice = createSlice({
 			);
 			state.data = [...vaccine];
 		},
-		orderVaccines: {
-			reducer: () => {},
-			prepare: () => {},
-		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getVaccines.pending, (state, action) => {
@@ -98,6 +100,7 @@ const vaccineSlice = createSlice({
 			const index = state.data.findIndex(
 				(vaccine) => vaccine.id === action.payload.id
 			);
+
 			state.data[index] = {
 				...action.payload.vaccine,
 			};
@@ -114,6 +117,5 @@ const vaccineSlice = createSlice({
 	},
 });
 
-export const { editVaccine, getVaccineById, orderVaccines } =
-	vaccineSlice.actions;
+export const { editVaccine, getVaccineById } = vaccineSlice.actions;
 export default vaccineSlice.reducer;

@@ -1,27 +1,25 @@
-import { useState, useEffect } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { useState, useEffect, useMemo } from "react";
+import { Box, Typography, TextField, Button, Input } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	createVaccine,
+	getVaccineById,
 	getVaccines,
-	orderVaccines,
+	searchKeyword,
 } from "features/vaccine/vaccineSlice";
-import { increment, decrement, incrementAsync, decrementAsync } from "features/counter/counterSlice";
+import {
+	increment,
+	decrement,
+	incrementAsync,
+} from "features/counter/counterSlice";
 
 export function Vaccine() {
 	const dispatch = useDispatch();
 	const { status, data } = useSelector((state) => state.vaccine);
+	const [vaccines, setVaccines] = useState(data);
 	const { value } = useSelector((state) => state.counter);
 	const [open, setOpen] = useState(false);
-
-	useEffect(() => {
-		dispatch(increment());
-	}, []);
-
-	useEffect(() => {
-		dispatch(getVaccines());
-	}, [dispatch]);
-
+	const [keyword, setKeyword] = useState("");
 	const [vaccine, setVaccine] = useState({
 		nomeVacina: "",
 		nomeFabricante: "",
@@ -30,6 +28,14 @@ export function Vaccine() {
 		percentualEficaciaComprovada: "",
 		precoVendaPorDose: "",
 	});
+
+	useEffect(() => {
+		setVaccines(data);
+	}, []);
+
+	useEffect(() => {
+		dispatch(getVaccines());
+	}, [dispatch]);
 
 	const handleChange = (event) => {
 		const id = event.currentTarget.id;
@@ -63,6 +69,30 @@ export function Vaccine() {
 		});
 	};
 
+	const handleIncrement = () => {
+		dispatch(increment());
+	};
+
+	const handleDecrement = () => {
+		dispatch(decrement());
+	};
+
+	const handleChangeKeyword = (e) => {
+		setKeyword(e.target.value);
+	};
+
+	const handleClickSearch = () => {
+		const index = data.findIndex((vaccine) => +vaccine.id === +keyword);
+
+		if (index === -1) {
+			setVaccines(data);
+		} else {
+			setVaccines(() => {
+				return data[index];
+			});
+		}
+	};
+
 	return (
 		<Box
 			sx={{
@@ -91,9 +121,19 @@ export function Vaccine() {
 					marginTop: "30px",
 				}}
 			>
-				{JSON.stringify(value, null, 2)}
-        <Button onClick={{dispatch(incrementAsync)}}>+</Button>
-        <Button onClick={{dispatch(decrementAsync)}}>-</Button>
+				<Button sx={{ bgColor: "red" }} onClick={handleIncrement}>
+					+
+				</Button>
+				<Button onClick={handleDecrement}>-</Button>
+
+				<Box sx={{ display: "flex", marginBottom: "0.5rem" }}>
+					<TextField
+						value={keyword}
+						onChange={handleChangeKeyword}
+						placeholder="busque pelo nome, id"
+					/>
+					<Button onClick={handleClickSearch}>Search</Button>
+				</Box>
 
 				<Box sx={{ display: "flex" }}>
 					<Typography
@@ -207,7 +247,7 @@ export function Vaccine() {
 						>
 							Vacinas registradas
 						</Typography>
-						<pre>{JSON.stringify(data, null, 2)}</pre>
+						<pre>{JSON.stringify(vaccines, null, 2)}</pre>
 					</Box>
 				</Box>
 			</Box>
