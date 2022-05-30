@@ -5,7 +5,7 @@ import { createVaccine, getVaccines } from "features/vaccine/vaccineSlice";
 
 export function Vaccine() {
   const dispatch = useDispatch();
-  const { status, data } = useSelector((state) => state.vaccine);
+  const { data } = useSelector((state) => state.vaccine);
   const [vaccines, setVaccines] = useState(data);
   const [keyword, setKeyword] = useState("");
   const [vaccine, setVaccine] = useState({
@@ -55,8 +55,7 @@ export function Vaccine() {
   };
 
   const handleClickCreate = () => {
-    dispatch(createVaccine(vaccine));
-    dispatch(getVaccines());
+    dispatch(createVaccine(vaccine)).then(() => dispatch(getVaccines()));
     clearForm();
     setVaccines(data);
   };
