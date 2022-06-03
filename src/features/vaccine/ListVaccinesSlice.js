@@ -45,7 +45,6 @@ const listVaccinesSlice = createSlice({
 			state.data[0][action.payload.name] = action.payload.value;
 			*/
 		},
-
 		getVaccineById: (state, action) => {
 			const vaccine = state.data.filter(
 				(vaccine) => Number(vaccine.id) === Number(action.payload.id)

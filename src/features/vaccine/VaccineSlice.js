@@ -25,8 +25,10 @@ export const createVaccine = createAsyncThunk(
 
 export const updateVaccine = createAsyncThunk(
 	"vaccine/update",
-	async ({ id, vaccine }) => {
-		await http.patch(`/vaccine/${Number(id)}`, vaccine).then((res) => res.data);
+	async ({ vaccineId, vaccine }) => {
+		await http
+			.patch(`/vaccine/${Number(vaccineId)}`, vaccine)
+			.then((res) => res.data);
 	}
 );
 
@@ -98,6 +100,7 @@ const vaccineSlice = createSlice({
 		builder.addCase(updateVaccine.fulfilled, (state, action) => {
 			state.status = "success";
 
+			/**
 			const index = state.data.findIndex(
 				(vaccine) => vaccine.id === action.payload.id
 			);
@@ -105,6 +108,10 @@ const vaccineSlice = createSlice({
 			state.data[index] = {
 				...action.payload.vaccine,
 			};
+			*/
+		});
+		builder.addCase(updateVaccine.rejected, (state, action) => {
+			state.status = "failed";
 		});
 
 		builder.addCase(destroyVaccine.pending, (state, action) => {

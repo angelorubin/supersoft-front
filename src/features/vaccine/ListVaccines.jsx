@@ -19,11 +19,10 @@ import {
 	CircularProgress,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import {} from "features/vaccine/vaccineSlice";
+import { getVaccines, updateVaccine } from "features/vaccine/vaccineSlice";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Icon as CustomIcon } from "components/icon/Icon";
-import { getVaccines } from "features/vaccine/listVaccinesSlice";
 
 export function ListVaccines() {
 	const theme = useTheme();
@@ -31,19 +30,11 @@ export function ListVaccines() {
 	const dispatch = useDispatch();
 	const [editDialog, setEditDialog] = useState(false);
 	const [destroyDialog, setDestroyDialog] = useState(false);
-	const [id, setId] = useState("");
-	const [vaccine, setVaccine] = useState([]);
+	const [vaccineId, setVaccineId] = useState("");
+	const [vaccine, setVaccine] = useState("");
 	const [backdrop, setBackdrop] = useState(false);
 	const [vaccines, setVaccines] = useState(data);
 	const [keyword, setKeyword] = useState("");
-
-	useEffect(() => {
-		if (status) {
-			// setBackdrop(true);
-		} else {
-			// setBackdrop(false);
-		}
-	}, [status]);
 
 	useEffect(() => {
 		dispatch(getVaccines());
@@ -56,9 +47,9 @@ export function ListVaccines() {
 	const handleOpenEditDialog = (e) => {
 		setEditDialog(true);
 		const id = Number(e.currentTarget.id);
-		setId(id);
-		const filteredVaccine = data.filter((vaccine) => vaccine.id === id);
-		setVaccine(filteredVaccine);
+		setVaccineId(id);
+		const filteredVaccineById = data.filter((vaccine) => vaccine.id === id);
+		setVaccine(filteredVaccineById);
 	};
 
 	const handleChangeEditVaccine = (e) => {
@@ -74,7 +65,7 @@ export function ListVaccines() {
 
 	const handleOpenDestroyDialog = async (e) => {
 		const id = e.target.id;
-		setId(id);
+		setVaccineId(id);
 		setDestroyDialog(true);
 	};
 
@@ -93,9 +84,11 @@ export function ListVaccines() {
 	};
 
 	const handleClickUpdateVaccine = () => {
-		// dispatch(updateVaccine({ id, vaccine: vaccine[0] }));
-		// dispatch(getVaccines());
-		// setEditDialog(false);
+		dispatch(updateVaccine({ vaccineId, vaccine: vaccine[0] })).then(() =>
+			dispatch(getVaccines()).then(() => setVaccines(data))
+		);
+
+		setEditDialog(false);
 	};
 
 	const handleCloseBackdrop = () => {};
@@ -126,6 +119,7 @@ export function ListVaccines() {
 
 	return (
 		<>
+			<pre>{JSON.stringify(vaccine, null, 2)}</pre>
 			{/* Backdrop */}
 			<Backdrop
 				sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -137,7 +131,7 @@ export function ListVaccines() {
 
 			{/* Destroy Dialog */}
 			<Dialog open={destroyDialog} onClose={handleCloseDestroyDialog}>
-				{JSON.stringify(id, null, 2)}
+				<pre>{JSON.stringify(vaccineId, null, 2)}</pre>
 				<DialogTitle>Deletar Vacina</DialogTitle>
 				<Divider />
 				<DialogContent>
