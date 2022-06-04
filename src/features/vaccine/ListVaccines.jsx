@@ -156,13 +156,19 @@ export function ListVaccines() {
 				<DialogTitle>Editar Vacina</DialogTitle>
 				<Divider />
 				<DialogContent>
-					<Box sx={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							gap: "0.7rem",
+						}}
+					>
 						{vaccine &&
 							vaccine.map((item) => {
 								return (
 									<>
 										<TextField
-											id={item.id}
+											id={String(item.id)}
 											name="nome_vacina"
 											size="small"
 											label="nome da vacina"

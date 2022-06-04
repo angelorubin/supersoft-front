@@ -26,9 +26,10 @@ export const createVaccine = createAsyncThunk(
 export const updateVaccine = createAsyncThunk(
 	"vaccine/update",
 	async ({ vaccineId, vaccine }) => {
-		await http
-			.patch(`/vaccine/${Number(vaccineId)}`, vaccine)
-			.then((res) => res.data);
+		await http.patch(`/vaccine/${Number(vaccineId)}`, vaccine).then((res) => {
+			console.log(res.data);
+			return res.data;
+		});
 	}
 );
 
